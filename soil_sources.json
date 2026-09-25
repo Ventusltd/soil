@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "id": "ukceh-eight-agricultural-sites-2022",
+  "status": "metadata_verified_measurement_import_pending",
+  "title": "Soil physico-chemical properties from eight UK agricultural sites, 2022",
+  "catalogue_url": "https://catalogue.ceh.ac.uk/documents/8c87a397-a010-48a4-8ca5-0f3742c2d857",
+  "doi": "https://doi.org/10.5285/8c87a397-a010-48a4-8ca5-0f3742c2d857",
+  "download_url": "https://data-package.ceh.ac.uk/data/8c87a397-a010-48a4-8ca5-0f3742c2d857.zip",
+  "licence": "OGL-UK-3.0",
+  "licence_url": "https://eidc.ceh.ac.uk/licences/OGL/plain",
+  "attribution": "Contains data supplied by UK Centre for Ecology & Hydrology.",
+  "citation": "Keith, A.M.; Appleton, E.R.; Pritchard, L.; Eves, N.; Tandy, S.; Brentegani, M.; Norris, D. (2024). Soil physico-chemical properties from eight UK agricultural sites, 2022. NERC EDS Environmental Information Data Centre. https://doi.org/10.5285/8c87a397-a010-48a4-8ca5-0f3742c2d857",
+  "measurement_period": ["2022-09-01", "2022-10-31"],
+  "measurement_status": "laboratory-measured soil properties; not modelled thermal resistivity",
+  "crs": "EPSG:4326 (catalogue); individual sample geometry not inspected",
+  "units": "Pending inspection of CSV and supporting methods; no numeric conversion authorised by metadata alone.",
+  "thermal_resistivity_available": false,
+  "limitations": "Moisture, texture and density are contextual soil properties, not cable-design thermal resistivity measurements. No electrical-to-thermal resistivity conversion. Requires site thermal testing and engineering assessment.",
+  "import_blocker": "Combined archive exceeded the 10 MB probe cap because supporting DOCX files are large. Numeric CSV entries were identified in official RO-Crate metadata but not retrieved or validated. No synthetic numeric output is supplied.",
+  "files": [
+    {"path": "data/wp2_baseline_sample_data.csv", "bytes": 110392, "sha256": "ef9cfdb35f0e68160a49140c8589beeead621d27c8ac52ee8e2ae9f22538ea3a"},
+    {"path": "data/wp2_soil_texture_data.csv", "bytes": 10642, "sha256": "9a34da274f35cbd1e80b93cee15e9249209974cd349fa8a1533d0830e293c628"}
+  ]
+}

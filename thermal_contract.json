@@ -1,0 +1,94 @@
+{
+  "schema": "soil.thermal.scalar.v1",
+  "purpose": "Sourced scalar thermal conductivity and reciprocal resistivity for soil heat-transfer inputs and CPU/GPU arithmetic validation.",
+  "scope": "No cable ampacity, approved rating, restoration recommendation or site property is inferred. Anisotropic tensors are outside this scalar contract.",
+  "reviewed_date": "2026-09-25",
+  "record_fields": {
+    "conductivity": {"quantity": "thermal conductivity", "unit": "W/(m K)", "required": true, "validation": "finite real number > 0; reject booleans and missing values"},
+    "conductivity_unit": {"required": true, "exact_value": "W/(m K)"},
+    "status": {"required": true, "enum": ["measured", "modelled", "scenario"]},
+    "source": {"required": true, "meaning": "Nonempty citation/DOI and sample identifier, model input provenance, or explicit synthetic scenario identifier"},
+    "model": {"required_when": "status=modelled", "meaning": "Model identifier/version; document calibration and applicability outside this arithmetic converter"},
+    "conditions": {
+      "meaning": "Preserve known measurement/model conditions. Explicit null means unknown and prevents pretending conditions match a cable trench.",
+      "fields": {
+        "volumetric_water_content": {"unit": "m3/m3", "meaning": "Liquid water volume / bulk soil volume; distinct from mass water content"},
+        "gravimetric_water_content_dry_basis": {"unit": "kg/kg", "meaning": "Water mass / dry soil mass; wet-basis content must be separately labelled"},
+        "dry_bulk_density": {"unit": "kg/m3", "meaning": "Dry solid mass / bulk sample volume; distinguish fine-earth fraction and whole soil"},
+        "temperature": {"unit": "degC", "meaning": "Measurement/model temperature; record frozen or unfrozen state"},
+        "depth_top": {"unit": "m", "meaning": "Below ground level"},
+        "depth_bottom": {"unit": "m", "meaning": "Below ground level; not inferred from topsoil data"},
+        "sampling_date": {"unit": "ISO8601"},
+        "method": {"meaning": "Measurement method, instrument, sample preparation and compaction where available"},
+        "mineralogy_texture_organic_matter": {"meaning": "Covariates only; no built-in conversion to conductivity"}
+      }
+    },
+    "thermal_resistivity": {"quantity": "thermal resistivity", "unit": "K m/W", "derivation": "1 / conductivity", "evidence": "derived_from_measured, derived_from_modelled or derived_from_scenario"}
+  },
+  "unit_rules": [
+    "Thermal resistivity K m/W is not electrical resistivity ohm m.",
+    "Hydraulic conductivity m/s is a different quantity from thermal conductivity W/(m K).",
+    "A temperature difference of one degree Celsius equals one kelvin; 100 degC cm/W = 1 K m/W.",
+    "Bulk density 1 g/cm3 = 1000 kg/m3. Percent moisture requires division by 100 and an explicit wet-mass, dry-mass or volume basis.",
+    "Do not convert unknown/no-data conductivity to zero or silently fill a nominal conductivity.",
+    "For positive conductivity interval [k_low,k_high], reciprocal bounds are [1/k_high,1/k_low]; inverse(mean(k)) is not generally mean(1/k)."
+  ],
+  "interpretation": [
+    "Moisture, dry density and composition affect thermal properties; an unconditioned soil class is not a measured thermal property.",
+    "Retain seasonal conditions, drying history and possible heat-driven moisture redistribution. The converter itself models none of these.",
+    "A model requires calibration/application-domain evidence. Soil moisture and density datasets can supply covariates but cannot alone establish site thermal conductivity.",
+    "Cable thermal calculations additionally require cable construction, losses, arrangement, burial depth and thermal boundary conditions; this contract provides no ampacity result."
+  ],
+  "sources": [
+    {
+      "id": "nist_soil_thermal",
+      "url": "https://nvlpubs.nist.gov/nistpubs/Legacy/BSS/nbsbuildingscience149.pdf",
+      "title": "Thermal behavior of fine-grained soils, NBS Building Science Series 149",
+      "supports": ["reciprocal definition", "thermal resistivity units", "moisture, dry density and composition dependence"],
+      "role": "Primary technical evidence, not a current cable rating standard"
+    },
+    {
+      "id": "southampton_low_2016",
+      "url": "https://eprints.soton.ac.uk/389737/1/Low_2016_Thermal_20conductivity_20of_20soils.pdf",
+      "title": "Thermal conductivity of soils, University of Southampton thesis",
+      "supports": ["Section 2.3.1, Equation 2.19: scalar thermal resistivity is reciprocal conductivity"],
+      "role": "Open university research; no dataset imported"
+    },
+    {
+      "id": "pangaea_904284",
+      "url": "https://doi.pangaea.de/10.1594/PANGAEA.904284",
+      "title": "Linhardt, Levy and Thomas (2023), Soil thermal properties of a polar desert in Taylor Valley, McMurdo Dry Valleys, Antarctica",
+      "licence": "CC-BY-4.0",
+      "role": "Open measured dataset candidate with both conductivity W/m/K and thermal resistivity degC cm/W; no data imported",
+      "geographic_limitation": "Antarctic research observations; not UK cable-trench property estimates"
+    },
+    {
+      "id": "lu_2014_dataset",
+      "url": "https://figshare.com/articles/dataset/Thermal_conductivity_dataset_Lu_et_al_2014_xlsx/5826294",
+      "title": "Lu, Ren and Lu, Thermal conductivity dataset (Lu et al. 2014), posted 2018",
+      "licence": "CC-BY-4.0",
+      "role": "Author-published dataset candidate for conditioned thermal-model evaluation; no data imported",
+      "limitation": "Inspect spreadsheet units, sample provenance and accompanying paper before model fitting"
+    },
+    {
+      "id": "bgs_electrical_exclusion",
+      "url": "https://www.bgs.ac.uk/datasets/resistivity/",
+      "title": "BGS Resistivity",
+      "role": "Explicitly an electrical-resistivity product, excluded from thermal conversion"
+    },
+    {
+      "id": "ukceh_soil_bank",
+      "url": "https://www.ceh.ac.uk/our-science/research-facilities/ukceh-soil-bank",
+      "title": "UKCEH Soil Bank",
+      "role": "Discovery source for soil observations; property availability, units, licence and sample support require dataset-specific checks"
+    }
+  ],
+  "arithmetic_fixture": {
+    "status": "scenario",
+    "source": "Synthetic powers-of-two unit-conversion benchmark; not observed soils or engineering defaults",
+    "conductivity_unit": "W/(m K)",
+    "conductivity": [0.25, 0.5, 1.0, 2.0, 4.0],
+    "expected_resistivity_unit": "K m/W",
+    "expected_resistivity": [4.0, 2.0, 1.0, 0.5, 0.25]
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "scope": "Published network design evidence, not a soil survey database. Prioritise EPN/SPN and southern England; retain geographic applicability per document.",
+  "sources": [
+    {"id":"ukpn-lv-rating","publisher":"UK Power Networks","title":"EDS 02-0033 LV waveform mains cable ratings","url":"https://media.umbraco.io/uk-power-networks/e1yghrah/eds-02-0033-lv-waveform-mains-cable-ratings.pdf","basis":"Published design standard; LV context only; verify version before applying","rights":"No redistribution licence established; local study, publish links only"},
+    {"id":"nged-wpd-lv-rating","publisher":"National Grid Electricity Distribution / former WPD","title":"ST SD 8B Part 1 LV underground cable ratings","url":"https://www.nationalgrid.co.uk/downloads-view-reciteme/606391","basis":"Published network design assumptions, not measured site soil","rights":"No redistribution licence established; local study, publish links only"},
+    {"id":"nget-heat-calculations","publisher":"National Grid Electricity Transmission","title":"EGL3 preliminary heat calculations, May 2025","url":"https://www.nationalgrid.com/sites/default/files/documents/2025-05/Volume%202%20Part%201%20Appendix%201.4.B%20EGL3%20Heat%20Calculations-%20WEB.pdf","basis":"Project-specific preliminary assessment; not a regional soil map or universally applicable rating","rights":"No redistribution licence established; local study, publish links only"}
+  ]
+}

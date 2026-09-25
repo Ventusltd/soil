@@ -1,0 +1,13 @@
+{
+  "scope": "Restoration, drainage, habitats and cable-route context; not ownership disputes. Southern England and East Anglia priority.",
+  "sources": [
+    {"publisher":"National Highways","url":"https://opendata.nationalhighways.co.uk/","use":"Road corridor geographic context","status":"discovery; dataset-specific licence and relevance must be checked","not_claimed":"Public thermal soil survey coverage"},
+    {"publisher":"Network Rail","url":"https://www.networkrail.co.uk/wp-content/uploads/2022/10/Network-Rail-State-of-Nature-report-plus-six-appendices.pdf","use":"Rail estate habitat baseline and restoration evidence","status":"public report discovered; not imported; redistribution licence unconfirmed","not_claimed":"Operational train feeds contain soil data"},
+    {"publisher":"Environment Agency","url":"https://environment.data.gov.uk/ecology/api/v1/index.html","use":"Aquatic ecological observations and waterway restoration context","status":"official API discovered; bounded adapter pending"},
+    {"publisher":"Environment Agency","url":"https://environment.data.gov.uk/water-quality/view/landing","use":"Water-quality observations; retain sampling depth/date/unit/detection-limit qualifiers","status":"official API discovered; bounded adapter pending"},
+    {"publisher":"Natural England","url":"https://designatedsites.naturalengland.org.uk/GreenInfrastructure/UserGuide/IMEDAndEEI.aspx","use":"Priority habitat context","status":"metadata reviewed; adapter pending","not_claimed":"Habitat condition or species absence"},
+    {"publisher":"NBN Atlas data partners","url":"https://docs.nbnatlas.org/nbn-atlas-licenses/","use":"Wildlife and bird occurrence context","status":"licences vary; restrict reuse to compatible records and retain sensitive-location generalisation; adapter pending"},
+    {"publisher":"UKCEH","url":"https://www.ceh.ac.uk/our-science/projects/cs-soils","use":"Soil health, carbon, pH and restoration context","status":"source catalogue; sample coverage differs from continuous maps"},
+    {"publisher":"Farming organisations and local environmental partnerships","use":"Soil-health trials and management evidence","status":"discovery pending; no dataset or reuse rights asserted"}
+  ]
+}
