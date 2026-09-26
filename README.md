@@ -9,6 +9,9 @@ Ground properties for cable thermal calculations and environmental restoration, 
 - `import_network.py`: local study cache of publicly available network thermal-design documents. Failed and blocked requests remain visible; documents are not redistributed.
 - `thermal.py`: validated thermal conductivity **W/(m K)** ↔ reciprocal thermal resistivity **K m/W**. Electrical resistivity **ohm m** is a different quantity.
 - `gpu_check.py`: CuPy polygon membership checked against an independent CPU winding-angle calculation, plus labelled thermal-unit fixtures.
+- `import_ground.py`: bounded, sequential import of open (OGL) ground records for one BNG box (BGS 625k geology, BGS borehole index with scan links, coal Development High Risk Area, EA source protection zones) to `E:\lidar-out\<site>\ground.json`; licences verified in `ground_sources.json`, and licensed or view-only layers (BGS 50k, aquifer designation, mine entries, GeoSure, radon potential, Soilscapes) stay null.
+- `ground_check.py`: seeded points in the ground box classified against every imported polygon by a CuPy kernel and a CPU winding-angle witness; zero disagreements required; LF receipt beside `ground.json`.
+- `test_ground.py`: offline tests for box clipping, borehole length handling and the ground licence manifest.
 
 All downloaded records and GPU outputs go under ignored `.local/`. Source manifests record scope and rights. A publicly accessible PDF is not automatically open-licensed content.
 
@@ -20,8 +23,10 @@ Use Python 3.12+. `import_environment.py` uses the standard library. `import_net
 python import_environment.py
 python import_soil.py
 python import_network.py
-python -m unittest test_thermal.py
+python -m unittest test_thermal.py test_ground.py
 python gpu_check.py
+python import_ground.py
+python ground_check.py
 ```
 
 Use the Python interpreter where CuPy is installed for the final command. Imports are bounded, explicit commands; no nationwide crawler or scheduled workflow is enabled.
