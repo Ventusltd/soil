@@ -2,13 +2,14 @@
 
 Only sources marked usable and import in ground_sources.json are fetched,
 sequentially, with a byte cap. Raw responses are cached under
-E:\\world-cache\\ground\\<site>\\ (or --cache). Geometry is clipped to the box
+$WORLD_CACHE/ground/<site>/ (or --cache; WORLD_CACHE defaults to .local/world-cache). Geometry is clipped to the box
 and written in EPSG:27700 metres. Layers that are not imported stay null
 (missing); layers queried with no hits are [] (none found).
 """
 import argparse
 import hashlib
 import json
+import os
 import time
 from datetime import datetime, timezone
 from pathlib import Path
@@ -189,10 +190,10 @@ def main():
     box = (a.e0 - a.margin, a.n0 - a.margin, a.e0 + a.size + a.margin, a.n0 + a.size + a.margin)
     if not (0 <= box[0] and box[2] <= 700000 and 0 <= box[1] and box[3] <= 1300000):
         ap.error('box outside British National Grid')
-    out = a.out or Path(r'E:\lidar-out') / a.site / 'ground.json'
-    cache = a.cache or Path(r'E:\world-cache\ground') / a.site
+    out = a.out or Path(os.environ.get('LIDAR_OUT', '.local/lidar-out')) / a.site / 'ground.json'
+    cache = a.cache or Path(os.environ.get('WORLD_CACHE', '.local/world-cache')) / 'ground' / a.site
     cache.mkdir(parents=True, exist_ok=True)
-    fwd, inv = ostn15(Path(r'E:\world-cache\ground\proj'))
+    fwd, inv = ostn15(Path(os.environ.get('WORLD_CACHE', '.local/world-cache')) / 'ground' / 'proj')
     manifest = json.loads((ROOT / 'ground_sources.json').read_text(encoding='utf-8'))
     src = {s['id']: s for s in manifest['sources']}
     lons, lats = inv.transform([box[0], box[2], box[0], box[2]], [box[1], box[1], box[3], box[3]])

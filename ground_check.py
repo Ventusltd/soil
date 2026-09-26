@@ -9,6 +9,7 @@ Receipt (LF) is written next to ground.json and under .local/gpu/.
 import argparse
 import hashlib
 import json
+import os
 import time
 from pathlib import Path
 
@@ -60,7 +61,7 @@ def classify(points, rings, method):
 
 def main():
     ap = argparse.ArgumentParser(description=__doc__)
-    ap.add_argument('--ground', type=Path, default=Path(r'E:\lidar-out\open-land-01\ground.json'))
+    ap.add_argument('--ground', type=Path, default=Path(os.environ.get('LIDAR_OUT', '.local/lidar-out')) / 'open-land-01' / 'ground.json')
     ap.add_argument('--points', type=int, default=20000)
     ap.add_argument('--seed', type=int, default=20260926)
     a = ap.parse_args()
